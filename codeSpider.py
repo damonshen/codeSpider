@@ -13,11 +13,14 @@ def writeFile(fileName, fileContent):
 
 try:
     mainPage = pq(url= 'http://stackoverflow.com/questions/513832/how-do-i-compare-strings-in-java')
+    print(mainPage('#question-header').text())
+    question = mainPage('#question-header').text()
+    writeFile('java-'+question,mainPage.text())
+    i=0
+    for codeSnippet in mainPage('pre code'):
+        i += 1
+        writeFile('impl'+str(i), pq(codeSnippet).text())
+        #print(pq(codeSnippet).text(), end='\n----------------------\n')
 except:
     print('error check your nerwork connection')
-i=0
-for codeSnippet in mainPage('pre code'):
-    i += 1
-    writeFile('impl'+str(i), pq(codeSnippet).text())
-    #print(pq(codeSnippet).text(), end='\n----------------------\n')
 
