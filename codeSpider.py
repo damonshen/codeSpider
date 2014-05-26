@@ -1,6 +1,7 @@
 from pyquery import PyQuery as pq
 import urllib.request
 import os
+import sys
 
 #write the file
 def writeFile(fileName, fileContent):
@@ -33,10 +34,12 @@ try:
         if int(vote.text()) < 1:
             continue 
         answerCode = pq(answer)('pre code')
+        allCode = ''
+        i += 1
         for codeSnippet in answerCode:
-            i += 1
-            writeFile('impl'+str(i), pq(codeSnippet).text())
+            allCode += pq(codeSnippet).text() + '\n'
         #print(pq(codeSnippet).text(), end='\n----------------------\n')
+        writeFile('impl'+str(i), allCode)
 except:
-    print('error check your nerwork connection')
+    print("Unexpected error:", sys.exc_info())
 
